@@ -1,4 +1,4 @@
-package com.company.jpaidentifier.entity;
+package com.mufizco.hibernateapp.entities;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;

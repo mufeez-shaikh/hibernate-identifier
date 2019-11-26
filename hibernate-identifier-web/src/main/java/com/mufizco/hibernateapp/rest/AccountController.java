@@ -1,7 +1,7 @@
-package com.company.jpaidentifier.rest;
+package com.mufizco.hibernateapp.rest;
 
-import com.company.jpaidentifier.entity.Account;
-import com.company.jpaidentifier.repository.AccountRepository;
+import com.mufizco.hibernateapp.entities.Account;
+import com.mufizco.hibernateapp.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,12 @@ import java.util.Random;
 public class AccountController {
 
     @Autowired
-    AccountRepository repository;
+    AccountService accountService;
 
     @GetMapping
     public ResponseEntity<List<Account>> get(){
 
-        List<Account> accounts = repository.findAll();
+        List<Account> accounts = accountService.get();
         if(accounts != null || !accounts.isEmpty()){
             return ResponseEntity.ok(accounts);
         }else{
@@ -40,7 +40,7 @@ public class AccountController {
                 .username(username)
                 .build();
 
-        Account accountSaved = repository.save(newAccount);
+        Account accountSaved = accountService.save(newAccount);
         return ResponseEntity.ok(accountSaved);
     }
 }

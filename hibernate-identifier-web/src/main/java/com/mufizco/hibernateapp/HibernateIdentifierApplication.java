@@ -1,13 +1,13 @@
-package com.company.jpaidentifier;
+package com.mufizco.hibernateapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class JpaIdentifierApplication {
+public class HibernateIdentifierApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JpaIdentifierApplication.class, args);
+		SpringApplication.run(HibernateIdentifierApplication.class, args);
 	}
 
 }
