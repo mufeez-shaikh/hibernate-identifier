@@ -1,3 +1,4 @@
+## Steps to run
 1. docker volume create postgres  
 2. run postgress in docker. creates container.
     
