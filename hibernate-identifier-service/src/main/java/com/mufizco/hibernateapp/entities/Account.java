@@ -28,15 +28,14 @@ public class Account {
             generator = "account_seq_table_generator"
     )
     private Long userId;
-    @Column
+
     private String username;
-    @Column
+
     private String password;
-    @Column
+
     private String email;
 
-    @Column
     private Date createdOn;
-    @Column
+
     private Date lastLogin;
 }

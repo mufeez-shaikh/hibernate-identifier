@@ -15,7 +15,7 @@ import java.util.Date;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_SEQ_GENERATOR")
-    @SequenceGenerator(name = "ADDRESS_SEQ_GENERATOR", sequenceName = "ADDRESS__SEQ", allocationSize = 1)
+    @SequenceGenerator(name = "ADDRESS_SEQ_GENERATOR", sequenceName = "ADDRESS_SEQ", allocationSize = 1)
     private Long id;
 
     @ManyToOne

@@ -1,3 +1,16 @@
+create user appuser with encrypted password 'appuser';
+
+create user serviceuser with encrypted password 'serviceuser';
+
+create schema uofu authorization appuser;
+
+GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES on ALL TABLES IN SCHEMA uofu to serviceuser;
+
+GRANT  USAGE , SELECT , UPDATE ON ALL SEQUENCES IN SCHEMA uofu TO serviceuser;
+
+SET search_path TO UOFU, public;
+-- after this if you create table without schema name, -- it would create the table in UOFU schema
+
  CREATE TABLE account(
       user_id serial PRIMARY KEY,
       username VARCHAR (50) UNIQUE NOT NULL,
@@ -6,6 +19,12 @@
       created_on TIMESTAMP NOT NULL,
       last_login TIMESTAMP
    );
+   -- SEQUENCE table-generator for account
+   CREATE TABLE USER_IDS (
+       seq_id varchar(255) not null,
+        seq_value INTEGER,
+        primary key (seq_id)
+    );
 
  CREATE TABLE STUDENT(
       id serial PRIMARY KEY,
@@ -15,8 +34,7 @@
       created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
    );
-
-   CREATE SEQUENCE IF NOT EXISTS STUDENT_SEQ INCREMENT BY 1 MAXVALUE 10000 START WITH 100;
+ CREATE SEQUENCE IF NOT EXISTS STUDENT_SEQ INCREMENT BY 1 MAXVALUE 10000 START WITH 100;
 
  CREATE TABLE ADDRESS(
       id serial PRIMARY KEY,
@@ -32,3 +50,4 @@
 
    CREATE SEQUENCE IF NOT EXISTS ADDRESS_SEQ INCREMENT BY 1 MAXVALUE 40000 START WITH 100;
 
+alter table address add constraint address_stud_fk foreign key (student_id) references student;
