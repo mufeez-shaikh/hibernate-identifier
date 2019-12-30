@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -24,6 +25,9 @@ public class Student {
 
     @Column
     private String lastName;
+
+    @OneToMany(mappedBy = "student")
+    private List<Address> address;
 
     @Column
     private String email;

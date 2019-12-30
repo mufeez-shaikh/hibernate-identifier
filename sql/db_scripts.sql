@@ -4,6 +4,8 @@ create user serviceuser with encrypted password 'serviceuser';
 
 create schema uofu authorization appuser;
 
+GRANT USAGE ON SCHEMA uofu TO serviceuser;
+
 GRANT SELECT, INSERT, UPDATE, DELETE, REFERENCES on ALL TABLES IN SCHEMA uofu to serviceuser;
 
 GRANT  USAGE , SELECT , UPDATE ON ALL SEQUENCES IN SCHEMA uofu TO serviceuser;
@@ -51,3 +53,32 @@ SET search_path TO UOFU, public;
    CREATE SEQUENCE IF NOT EXISTS ADDRESS_SEQ INCREMENT BY 1 MAXVALUE 40000 START WITH 100;
 
 alter table address add constraint address_stud_fk foreign key (student_id) references student;
+
+
+-- many to many mappings
+ CREATE TABLE USERS(
+      id serial PRIMARY KEY,
+      user_name VARCHAR (150) not null,
+      created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+   );
+  CREATE SEQUENCE IF NOT EXISTS USERS_SEQ INCREMENT BY 1 MAXVALUE 40000 START WITH 100;
+
+
+  CREATE TABLE LISTING(
+       id serial PRIMARY KEY,
+       item_name VARCHAR (150) not null,
+       created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+  CREATE SEQUENCE IF NOT EXISTS LISTING_SEQ INCREMENT BY 1 MAXVALUE 40000 START WITH 100;
+
+  CREATE TABLE USER_LISTING(
+       user_id INTEGER not null,
+       listing_id INTEGER not null,
+       created_on TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       last_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+       primary key (user_id, listing_id),
+       foreign key (user_id) references users(id),
+       foreign key (listing_id) references listing(id)
+    );
