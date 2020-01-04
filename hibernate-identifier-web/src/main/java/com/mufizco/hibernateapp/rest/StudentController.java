@@ -2,8 +2,10 @@ package com.mufizco.hibernateapp.rest;
 
 import com.mufizco.hibernateapp.entities.Account;
 import com.mufizco.hibernateapp.entities.Student;
+import com.mufizco.hibernateapp.namedparamjdbctemplate.StudentDao;
 import com.mufizco.hibernateapp.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,9 @@ public class StudentController {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    StudentDao studentDao;
 
     @PostMapping
     public ResponseEntity<Student> post(@RequestBody Student student){
@@ -40,5 +45,14 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<List<Student>> getAll(){
         return ResponseEntity.ok(studentService.getAll());
+    }
+
+    @PutMapping(path = "/updateByFirstName/{firstName}")
+    public ResponseEntity updateStudentByFirstname(@PathVariable String firstName){
+
+        // update using namedParameterJdbcTemplate
+        studentDao.updateStudentByFirstName(firstName);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
