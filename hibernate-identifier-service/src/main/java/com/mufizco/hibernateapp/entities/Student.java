@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,4 +38,11 @@ public class Student {
 
     @Column
     private Date lastUpdated = new Date();
+
+    public void addAddress(Address address){
+        if(this.address == null){
+            this.address = new ArrayList<>();
+        }
+        this.address.add(address);
+    }
 }

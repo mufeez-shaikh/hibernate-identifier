@@ -1,9 +1,12 @@
 package com.mufizco.hibernateapp.entities.manytomany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -24,8 +27,16 @@ public class Listing {
     @Column
     private String itemName;
 
-    @ManyToMany (mappedBy = "listings")
-    private Set<Users> users;
+    @JsonIgnore
+    @Builder.Default
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "listings")
+    @JsonIgnoreProperties("listings")
+    private Set<Users> users = new HashSet<>();
 
     @Column
     @Builder.Default
@@ -34,4 +45,8 @@ public class Listing {
     @Column
     @Builder.Default
     private Date lastUpdated = new Date();
+
+    public void addUsers(Users users) {
+        this.users.add(users);
+    }
 }
